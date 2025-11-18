@@ -1,0 +1,105 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data directories
+data/raw/
+data/processed/
+*.wav
+*.mp3
+*.flac
+*.ogg
+
+# Model checkpoints and outputs
+models/
+*.pt
+*.pth
+*.bin
+*.ckpt
+*.safetensors
+
+# ONNX models
+*.onnx
+*.onnx_data
+
+# TFLite models
+*.tflite
+
+# Core ML models
+*.mlmodel
+*.mlpackage
+
+# TensorFlow
+*.pb
+saved_model/
+
+# Logs and tracking
+logs/
+wandb/
+tensorboard/
+*.log
+mlruns/
+
+# Optimization artifacts
+optimization/temp/
+*.tflite.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Compressed files (keep scripts that download them)
+*.zip
+*.tar.gz
+*.tar.bz2
+*.7z
+
+# Secrets and configs
+.env
+*.key
+credentials.json
+
+# Large files
+*.h5
+*.hdf5

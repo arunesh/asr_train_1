@@ -1,0 +1,95 @@
+# Whisper Tiny Fine-tuning Configuration for Punjabi
+
+# Model configuration
+model:
+  name: "openai/whisper-tiny"
+  language: "punjabi"  # Will use language code 'pa'
+  task: "transcribe"
+
+# Data configuration
+data:
+  train_manifest: "data/manifests/punjabi_train.json"
+  val_manifest: "data/manifests/punjabi_val.json"
+  test_manifest: "data/manifests/punjabi_test.json"
+  sample_rate: 16000
+  num_workers: 4
+  pin_memory: true
+
+# Training configuration
+training:
+  output_dir: "models/whisper_punjabi"
+  num_epochs: 30  # Slightly more epochs due to less data
+  batch_size: 16
+  gradient_accumulation_steps: 4
+  learning_rate: 1.0e-5
+  weight_decay: 0.01
+  warmup_steps: 300  # Fewer warmup steps due to less data
+  max_grad_norm: 1.0
+
+  fp16: true
+
+  eval_strategy: "steps"
+  eval_steps: 300  # More frequent evaluation due to smaller dataset
+  save_strategy: "steps"
+  save_steps: 300
+  save_total_limit: 3
+  load_best_model_at_end: true
+  metric_for_best_model: "wer"
+  greater_is_better: false
+
+  logging_steps: 50
+  report_to: ["tensorboard", "wandb"]
+
+  early_stopping_patience: 7
+  early_stopping_threshold: 0.01
+
+# Optimizer configuration
+optimizer:
+  type: "adamw"
+  betas: [0.9, 0.999]
+  eps: 1.0e-8
+
+# Scheduler configuration
+scheduler:
+  type: "linear"
+  warmup_ratio: 0.1
+
+# Data augmentation - More aggressive due to limited data
+augmentation:
+  speed_perturbation:
+    enabled: true
+    rates: [0.85, 0.9, 0.95, 1.0, 1.05, 1.1, 1.15]  # More variations
+
+  noise_augmentation:
+    enabled: true
+    snr_range: [8, 22]  # Wider range
+    noise_types: ["white", "pink", "brown"]
+
+  spec_augment:
+    enabled: true
+    freq_mask_param: 20  # More aggressive
+    time_mask_param: 40
+    num_freq_masks: 3
+    num_time_masks: 3
+
+# Generation configuration
+generation:
+  max_length: 225
+  num_beams: 5
+  length_penalty: 1.0
+  early_stopping: true
+
+# Compute configuration
+compute:
+  device: "cuda"
+  num_gpus: 1
+  distributed: false
+
+# Weights & Biases configuration
+wandb:
+  project: "whisper-punjabi-finetuning"
+  name: "whisper-tiny-punjabi-v1"
+  tags: ["whisper", "punjabi", "tiny", "phase1"]
+  notes: "Fine-tuning Whisper Tiny for Punjabi ASR - Phase 1 MVP with heavy augmentation"
+
+seed: 42
